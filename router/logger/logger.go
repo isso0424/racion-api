@@ -1,8 +1,8 @@
 package logger
 
 import (
-	"isso0424/gorilla-template/logger"
-	"isso0424/gorilla-template/router"
+	"isso0424/racion-api/logger"
+	"isso0424/racion-api/router"
 )
 
 func LoggingInfo(route router.Route, message string) {

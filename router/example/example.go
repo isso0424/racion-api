@@ -1,7 +1,7 @@
 package example
 
 import (
-	"isso0424/gorilla-template/router/logger"
+	"isso0424/racion-api/router/logger"
 	"net/http"
 )
 

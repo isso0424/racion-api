@@ -2,9 +2,9 @@ package server
 
 import (
 	"fmt"
-	"isso0424/gorilla-template/router"
-	"isso0424/gorilla-template/router/routes"
-	"isso0424/gorilla-template/server/midleware"
+	"isso0424/racion-api/router"
+	"isso0424/racion-api/router/routes"
+	"isso0424/racion-api/server/midleware"
 	"net/http"
 
 	"github.com/gorilla/handlers"

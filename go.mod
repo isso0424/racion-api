@@ -1,4 +1,4 @@
-module isso0424/gorilla-template
+module isso0424/racion-api
 
 go 1.16
 
