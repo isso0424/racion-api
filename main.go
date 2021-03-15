@@ -1,7 +1,7 @@
 package main
 
 import (
-	"isso0424/gorilla-template/server"
+	"isso0424/racion-api/server"
 	"log"
 )
 

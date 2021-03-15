@@ -1,8 +1,8 @@
 package midleware
 
 import (
-	"isso0424/gorilla-template/logger"
-	"isso0424/gorilla-template/router"
+	"isso0424/racion-api/logger"
+	"isso0424/racion-api/router"
 	"net/http"
 )
 
