@@ -3,15 +3,13 @@ package template_test
 import (
 	"isso0424/racion-api/mock/repository/template"
 	"isso0424/racion-api/types/domain"
-	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-var repository template.TemplateRepository
-
-func TestMain(m *testing.M) {
+func TestCreateTemplate(t *testing.T) {
+	repository := template.TemplateRepository{}
 	repository.Data = []domain.Template{
 		{
 			Name: "test",
@@ -26,12 +24,6 @@ func TestMain(m *testing.M) {
 		},
 	}
 
-	code := m.Run()
-
-	os.Exit(code)
-}
-
-func TestCreateTemplate(t *testing.T) {
 	template, err := repository.Create("example", "#ff00ff", []domain.Tag{
 		{
 			Title: "example",
@@ -58,6 +50,20 @@ func TestCreateTemplate(t *testing.T) {
 }
 
 func TestEditTemplate(t *testing.T) {
+	repository := template.TemplateRepository{}
+	repository.Data = []domain.Template{
+		{
+			Name: "test",
+			Color: "#ffffff",
+			Tags: []domain.Tag{
+				{
+					Title: "tags1",
+					Description: "desc",
+					Color: "#000000",
+				},
+			},
+		},
+	}
 	template, err := repository.Edit("test", "#012345", []domain.Tag{
 		{
 			Title: "hoge",
@@ -84,6 +90,20 @@ func TestEditTemplate(t *testing.T) {
 }
 
 func TestGetAll(t *testing.T) {
+	repository := template.TemplateRepository{}
+	repository.Data = []domain.Template{
+		{
+			Name: "test",
+			Color: "#ffffff",
+			Tags: []domain.Tag{
+				{
+					Title: "tags1",
+					Description: "desc",
+					Color: "#000000",
+				},
+			},
+		},
+	}
 	templates, err := repository.GetAll()
 	if err != nil {
 		t.Fatal(err)
@@ -97,6 +117,20 @@ func TestGetAll(t *testing.T) {
 }
 
 func TestGetByName(t *testing.T) {
+	repository := template.TemplateRepository{}
+	repository.Data = []domain.Template{
+		{
+			Name: "test",
+			Color: "#ffffff",
+			Tags: []domain.Tag{
+				{
+					Title: "tags1",
+					Description: "desc",
+					Color: "#000000",
+				},
+			},
+		},
+	}
 	template, err := repository.GetByName("test")
 	if err != nil {
 		t.Fatal(err)
