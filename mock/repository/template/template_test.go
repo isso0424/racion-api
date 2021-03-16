@@ -142,3 +142,36 @@ func TestGetByName(t *testing.T) {
 	assert.Equal(t, "desc", template.Tags[0].Description)
 	assert.Equal(t, "#000000", template.Tags[0].Color)
 }
+
+func TestFail(t *testing.T) {
+	repository := template.TemplateRepository{}
+	repository.Data = []domain.Template{
+		{
+			Name: "test",
+			Color: "#ffffff",
+			Tags: []domain.Tag{
+				{
+					Title: "tags1",
+					Description: "desc",
+					Color: "#000000",
+				},
+			},
+		},
+	}
+	const errorMsg = "error should occur in here"
+
+	_, err := repository.Create("test", "#ffffff", []domain.Tag{})
+	if err == nil {
+		t.Fatal(errorMsg)
+	}
+
+	_, err = repository.Edit("invalid", "#ffffff", []domain.Tag{})
+	if err == nil {
+		t.Fatal(errorMsg)
+	}
+
+	_, err = repository.GetByName("invalid")
+	if err == nil {
+		t.Fatal(errorMsg)
+	}
+}
