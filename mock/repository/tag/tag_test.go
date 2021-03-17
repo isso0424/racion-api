@@ -3,6 +3,7 @@ package tag_test
 import (
 	"isso0424/racion-api/mock/repository/tag"
 	"isso0424/racion-api/types/domain"
+	"isso0424/racion-api/types/repository"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -41,7 +42,7 @@ func TestCreate(t *testing.T) {
 func TestEdit(t *testing.T) {
 	repo := setup()
 
-	tag, err := repo.Edit("hoge", "fuga", "foo", "bar")
+	tag, err := repo.Edit(repo.Data[0].ID, "fuga", "foo", "bar")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -78,7 +79,20 @@ func TestGetAll(t *testing.T) {
 func TestGetByName(t *testing.T) {
 	repo := setup()
 
-	tag, err := repo.GetByTitle("hoge")
+	tags, err := repo.GetByTitle("hoge")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	assert.Equal(t, "hoge", tags[0].Title)
+	assert.Equal(t, "fuga", tags[0].Description)
+	assert.Equal(t, "#ffffff", tags[0].Color)
+}
+
+func TestGetByID(t *testing.T) {
+	repo := setup()
+
+	tag, err := repo.GetByID(repo.Data[0].ID)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -91,12 +105,19 @@ func TestGetByName(t *testing.T) {
 func TestFail(t *testing.T) {
 	repo := setup()
 
-	_, err := repo.Create("hoge", "invalid", "invalid")
-	assert.NotEqual(t, nil, err)
-
-	_, err = repo.Edit("fuga", "invalid", "invalid", "invalid")
+	_, err := repo.Edit("invalid", "fuga", "invalid", "invalid")
 	assert.NotEqual(t, nil, err)
 
 	_, err = repo.GetByTitle("fuga")
 	assert.NotEqual(t, nil, err)
+
+	_, err = repo.GetByID("invalid")
+	assert.NotEqual(t, nil, err)
+}
+
+func TestImplInterface(t *testing.T) {
+	repo := setup()
+	f := func (r repository.TagRepository) {}
+
+	f(&repo)
 }
