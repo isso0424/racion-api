@@ -10,7 +10,7 @@ func(db MockTagDB) Create(title, description, color string) (domain.Tag, error) 
 	return domain.Tag{}, nil
 }
 
-func(db MockTagDB) Edit(title, description, color string) (domain.Tag, error) {
+func(db MockTagDB) Edit(title, newTitle, description, color string) (domain.Tag, error) {
 	return domain.Tag{}, nil
 }
 
