@@ -33,9 +33,9 @@ func TestCreate(t *testing.T) {
 	assert.Equal(t, "fuga", tag.Color)
 
 	assert.Equal(t, 2, len(repo.Data))
-	assert.Equal(t, "foo", repo.Data[0].Title)
-	assert.Equal(t, "bar", repo.Data[0].Description)
-	assert.Equal(t, "fuga", repo.Data[0].Color)
+	assert.Equal(t, "foo", repo.Data[1].Title)
+	assert.Equal(t, "bar", repo.Data[1].Description)
+	assert.Equal(t, "fuga", repo.Data[1].Color)
 }
 
 func TestEdit(t *testing.T) {
