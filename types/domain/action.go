@@ -8,4 +8,5 @@ type Action struct {
 	Color string
 	StartAt time.Time
 	EndAt time.Time
+	ID string
 }
