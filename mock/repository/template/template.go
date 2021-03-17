@@ -5,11 +5,11 @@ import (
 	"isso0424/racion-api/types/domain"
 )
 
-type TemplateRepository struct {
+type MockTemplateDB struct {
 	Data []domain.Template
 }
 
-func(repo *TemplateRepository) Create(name, color string, tags []domain.Tag) (domain.Template, error) {
+func(repo *MockTemplateDB) Create(name, color string, tags []domain.Tag) (domain.Template, error) {
 	for _, data := range repo.Data {
 		if data.Name == name {
 			return domain.Template{}, errors.New("duplicate name")
@@ -22,9 +22,10 @@ func(repo *TemplateRepository) Create(name, color string, tags []domain.Tag) (do
 	return newData, nil
 }
 
-func(repo *TemplateRepository) Edit(name, color string, tags []domain.Tag) (domain.Template, error) {
+func(repo *MockTemplateDB) Edit(id, name, color string, tags []domain.Tag) (domain.Template, error) {
 	for index, data := range repo.Data {
-		if data.Name == name {
+		if data.ID == id {
+			repo.Data[index].Name = name
 			repo.Data[index].Color = color
 			repo.Data[index].Tags = tags
 
@@ -35,13 +36,26 @@ func(repo *TemplateRepository) Edit(name, color string, tags []domain.Tag) (doma
 	return domain.Template{}, errors.New("target not found")
 }
 
-func(repo *TemplateRepository) GetAll() ([]domain.Template, error) {
+func(repo *MockTemplateDB) GetAll() ([]domain.Template, error) {
 	return repo.Data, nil
 }
 
-func(repo *TemplateRepository) GetByName(name string) (domain.Template, error) {
+func(repo *MockTemplateDB) GetByName(name string) (templates []domain.Template, err error) {
 	for _, data := range repo.Data {
 		if data.Name == name {
+			templates = append(templates, data)
+		}
+	}
+
+	if len(templates) == 0 {
+		return []domain.Template{}, errors.New("target not found")
+	}
+	return
+}
+
+func(repo *MockTemplateDB) GetByID(id string) (domain.Template, error) {
+	for _, data := range repo.Data {
+		if data.ID == id {
 			return data, nil
 		}
 	}

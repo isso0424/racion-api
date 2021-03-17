@@ -3,6 +3,8 @@ package tag
 import (
 	"errors"
 	"isso0424/racion-api/types/domain"
+
+	"github.com/google/uuid"
 )
 
 type MockTagDB struct {
@@ -10,21 +12,16 @@ type MockTagDB struct {
 }
 
 func(db *MockTagDB) Create(title, description, color string) (domain.Tag, error) {
-	for _, data := range db.Data {
-		if data.Title == title {
-			return domain.Tag{}, errors.New("duplicate name")
-		}
-	}
-	tag := domain.Tag{ Title: title, Description: description, Color: color }
+	tag := domain.Tag{ Title: title, Description: description, Color: color, ID: uuid.NewString() }
 	db.Data = append(db.Data, tag)
 
 	return tag, nil
 }
 
-func(db *MockTagDB) Edit(title, newTitle, description, color string) (domain.Tag, error) {
+func(db *MockTagDB) Edit(id, title, description, color string) (domain.Tag, error) {
 	for index, data := range db.Data {
-		if data.Title == title {
-			db.Data[index].Title = newTitle
+		if data.ID == id {
+			db.Data[index].Title = title
 			db.Data[index].Description = description
 			db.Data[index].Color = color
 
@@ -39,11 +36,27 @@ func(db MockTagDB) GetAll() ([]domain.Tag, error) {
 	return db.Data, nil
 }
 
-func(db MockTagDB) GetByTitle(title string) (domain.Tag, error) {
+func(db MockTagDB) GetByTitle(title string) (tags []domain.Tag, err error) {
 	for _, data := range db.Data {
 		if data.Title == title {
+			tags = append(tags, data)
+		}
+	}
+	if len(tags) == 0 {
+		err = errors.New("target not found")
+
+		return
+	}
+
+	return
+}
+
+func(db MockTagDB) GetByID(id string) (domain.Tag, error) {
+	for _, data := range db.Data {
+		if data.ID == id {
 			return data, nil
 		}
 	}
+
 	return domain.Tag{}, errors.New("target not found")
 }
