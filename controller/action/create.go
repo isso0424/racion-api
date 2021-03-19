@@ -18,3 +18,22 @@ func(controller ActionController) Create(title, color string, tags []string, sta
 
 	return controller.actionRepo.Create(title, color, tagsArray, startAt, endAt)
 }
+
+func(controller ActionController) CreateFromTemplate(title string, templateID string, startAt, endAt time.Time) (domain.Action, error) {
+	template, err := controller.templateRepo.GetByID(templateID)
+	if err != nil {
+		return domain.Action{}, err
+	}
+
+	var tags []domain.Tag
+	for _, tag := range template.Tags {
+		t, err := controller.tagRepo.GetByID(tag.ID)
+		if err != nil {
+			return domain.Action{}, err
+		}
+
+		tags = append(tags, t)
+	}
+
+	return controller.actionRepo.Create(title, template.Color, template.Tags, startAt, endAt)
+}
