@@ -21,6 +21,7 @@ func setup() action.MockActionDB {
 						Title: "tag",
 						Color: "#ffffff",
 						Description: "desc",
+						ID: "id",
 					},
 				},
 				Color: "#123456",
@@ -135,6 +136,21 @@ func TestGetByID(t *testing.T) {
 	assert.Equal(t, "desc", action.Tags[0].Description)
 }
 
+func TestGetByTag(t *testing.T) {
+	repo := setup()
+	actions, err := repo.GetByTag("id")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	assert.Equal(t, "title", actions[0].Title)
+	assert.Equal(t, "#123456", actions[0].Color)
+	assert.Equal(t, "id", actions[0].ID)
+	assert.Equal(t, "tag", actions[0].Tags[0].Title)
+	assert.Equal(t, "#ffffff", actions[0].Tags[0].Color)
+	assert.Equal(t, "desc", actions[0].Tags[0].Description)
+}
+
 func TestFail(t *testing.T) {
 	repo := setup()
 
@@ -145,5 +161,8 @@ func TestFail(t *testing.T) {
 	assert.NotEqual(t, nil, err)
 
 	_, err = repo.GetByTitle("invalid")
+	assert.NotEqual(t, nil, err)
+
+	_, err = repo.GetByTag("invalid")
 	assert.NotEqual(t, nil, err)
 }

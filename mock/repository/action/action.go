@@ -58,6 +58,23 @@ func(db MockActionDB) GetByTitle(title string) ([]domain.Action, error) {
 	return []domain.Action{}, errors.New("target not found")
 }
 
+func(db MockActionDB) GetByTag(tagID string) ([]domain.Action, error) {
+	var results []domain.Action
+	for _, data := range db.Data {
+		for _, tag := range data.Tags {
+			if tag.ID == tagID {
+				results = append(results, data)
+			}
+		}
+	}
+
+	if len(results) == 0 {
+		return results, errors.New("target not found")
+	}
+
+	return results, nil
+}
+
 func(db MockActionDB) GetByID(id string) (domain.Action, error) {
 	for _, data := range db.Data {
 		if data.ID == id {

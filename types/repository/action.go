@@ -10,6 +10,6 @@ type ActionRepository interface {
 	Edit(id, title, color string, tags []domain.Tag, startAt, endAt time.Time) (domain.Action, error)
 	GetAll() ([]domain.Action, error)
 	GetByTitle(title string) ([]domain.Action, error)
-	GetByTag(tag domain.Tag) ([]domain.Action, error)
+	GetByTag(tagID string) ([]domain.Action, error)
 	GetByID(id string) (domain.Action, error)
 }
