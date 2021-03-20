@@ -9,3 +9,7 @@ func(controller TagController) GetAll() ([]domain.Tag, error) {
 func(controller TagController) GetByTitle(title string) ([]domain.Tag, error) {
 	return controller.repo.GetByTitle(title)
 }
+
+func(controller TagController) GetByID(id string) (domain.Tag, error) {
+	return controller.repo.GetByID(id)
+}
