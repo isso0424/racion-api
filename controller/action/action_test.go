@@ -151,6 +151,21 @@ func TestGet(t *testing.T) {
 	assert.Equal(t, "id", action.ID)
 }
 
+func TestDelete(t *testing.T) {
+	ctrl := setup()
+	action, err := ctrl.Delete("id")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	assert.Equal(t, "action1", action.Title)
+	assert.Equal(t, "#ffffff", action.Color)
+	assert.Equal(t, "id", action.ID)
+
+	_, err = ctrl.GetByID("id")
+	assert.NotEqual(t, nil, err)
+}
+
 func TestFail(t *testing.T) {
 	ctrl := setup()
 	_, err := ctrl.Create("invalid", "invalid", []string{"invalid"}, startAt, endAt)
@@ -166,5 +181,8 @@ func TestFail(t *testing.T) {
 	assert.NotEqual(t, nil, err)
 
 	_, err = ctrl.Edit("id", "id", "invalid", []string{"invalid"}, startAt, endAt)
+	assert.NotEqual(t, nil, err)
+
+	_, err = ctrl.Delete("invalid")
 	assert.NotEqual(t, nil, err)
 }
