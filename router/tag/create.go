@@ -14,7 +14,7 @@ type TagCreating struct {}
 
 func(route TagCreating) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	type Param struct {
-		Name string
+		Title string
 		Color string
 		Description string
 	}
@@ -34,13 +34,13 @@ func(route TagCreating) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if params.Name == "" || params.Color == "" || params.Description == "" {
+	if params.Title == "" || params.Color == "" || params.Description == "" {
 		handler.HandleError("invalid arguments", "invalid arguments", http.StatusBadRequest, route, w)
 
 		return
 	}
 
-	tag, err := variables.TagController.Create(params.Name, params.Description, params.Color)
+	tag, err := variables.TagController.Create(params.Title, params.Description, params.Color)
 	if err != nil {
 		handler.HandleError(err.Error(), "internal server error", http.StatusInternalServerError, route, w)
 
