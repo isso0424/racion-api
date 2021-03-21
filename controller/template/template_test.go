@@ -84,7 +84,21 @@ func TestGet(t *testing.T) {
 	assert.Equal(t, "template1", template.Name)
 	assert.Equal(t, "#000000", template.Color)
 	assert.Equal(t, "id", template.ID)
-	assert.Equal(t, "tag_id", templates[0].Tags[0].ID)
+	assert.Equal(t, "tag_id", template.Tags[0].ID)
+}
+
+func TestDelete(t *testing.T) {
+	ctrl := setup()
+	template, err := ctrl.Delete("id")
+
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "template1", template.Name)
+	assert.Equal(t, "#000000", template.Color)
+	assert.Equal(t, "id", template.ID)
+	assert.Equal(t, "tag_id", template.Tags[0].ID)
+
+	_, err = ctrl.GetByID("id")
+	assert.NotEqual(t, nil, err)
 }
 
 func TestFail(t *testing.T) {

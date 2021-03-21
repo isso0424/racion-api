@@ -64,3 +64,16 @@ func TestGet(t *testing.T) {
 	assert.Equal(t, "#000000", tag.Color)
 	assert.Equal(t, "desc", tag.Description)
 }
+
+func TestDelete(t *testing.T) {
+	ctrl := setup()
+	tag, err := ctrl.Delete("id")
+
+	assert.Equal(t, nil, err)
+	assert.Equal(t, "tag1", tag.Title)
+	assert.Equal(t, "#000000", tag.Color)
+	assert.Equal(t, "desc", tag.Description)
+
+	_, err = ctrl.GetByID("id")
+	assert.NotEqual(t, nil, err)
+}

@@ -12,4 +12,5 @@ type ActionInteractor interface {
 	GetAll() ([]domain.Action, error)
 	GetByTitle(title string) ([]domain.Action, error)
 	GetByID(id string) (domain.Action, error)
+	Delete(id string) (domain.Action, error)
 }
