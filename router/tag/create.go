@@ -3,6 +3,7 @@ package tag
 import (
 	"encoding/json"
 	"io/ioutil"
+	"isso0424/racion-api/router/handler"
 	"isso0424/racion-api/router/logger"
 	"isso0424/racion-api/router/responser"
 	"isso0424/racion-api/router/variables"
@@ -21,55 +22,27 @@ func(route TagCreating) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	data, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		logger.LoggingError(route, err.Error())
-		responser.Fail(
-			responser.ErrorPayload{
-				Message: "internal server error",
-				Status: http.StatusInternalServerError,
-			},
-			w,
-		)
+		handler.HandleError(err.Error(), "internal server error", http.StatusInternalServerError, route, w)
 
 		return
 	}
 
 	err = json.Unmarshal(data, &params)
 	if err != nil {
-		logger.LoggingError(route, err.Error())
-		responser.Fail(
-			responser.ErrorPayload{
-				Message: "internal server error",
-				Status: http.StatusInternalServerError,
-			},
-			w,
-		)
+		handler.HandleError(err.Error(), "internal server error", http.StatusInternalServerError, route, w)
 
 		return
 	}
 
 	if params.Name == "" || params.Color == "" || params.Description == "" {
-		logger.LoggingError(route, "invalid arguments")
-		responser.Fail(
-			responser.ErrorPayload{
-				Message: "invalid arguments",
-				Status: http.StatusBadRequest,
-			},
-			w,
-		)
+		handler.HandleError("invalid arguments", "invalid arguments", http.StatusBadRequest, route, w)
 
 		return
 	}
 
 	tag, err := variables.TagController.Create(params.Name, params.Description, params.Color)
 	if err != nil {
-		logger.LoggingError(route, err.Error())
-		responser.Fail(
-			responser.ErrorPayload{
-				Message: "internal server error",
-				Status: http.StatusInternalServerError,
-			},
-			w,
-		)
+		handler.HandleError(err.Error(), "internal server error", http.StatusInternalServerError, route, w)
 
 		return
 	}
