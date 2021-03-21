@@ -151,6 +151,22 @@ func TestGetByTag(t *testing.T) {
 	assert.Equal(t, "desc", actions[0].Tags[0].Description)
 }
 
+func TestDelete(t *testing.T) {
+	repo := setup()
+	action, err := repo.Delete("id")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	assert.Equal(t, "title", action.Title)
+	assert.Equal(t, "#123456", action.Color)
+	assert.Equal(t, "id", action.ID)
+	assert.Equal(t, "tag", action.Tags[0].Title)
+
+	_, err = repo.GetByID("id")
+	assert.NotEqual(t, nil, err)
+}
+
 func TestFail(t *testing.T) {
 	repo := setup()
 
@@ -164,5 +180,8 @@ func TestFail(t *testing.T) {
 	assert.NotEqual(t, nil, err)
 
 	_, err = repo.GetByTag("invalid")
+	assert.NotEqual(t, nil, err)
+
+	_, err = repo.Delete("invalid")
 	assert.NotEqual(t, nil, err)
 }

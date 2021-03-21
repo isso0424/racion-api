@@ -12,4 +12,5 @@ type ActionRepository interface {
 	GetByTitle(title string) ([]domain.Action, error)
 	GetByTag(tagID string) ([]domain.Action, error)
 	GetByID(id string) (domain.Action, error)
+	Delete(id string) (domain.Action, error)
 }
