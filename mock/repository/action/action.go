@@ -83,3 +83,15 @@ func(db MockActionDB) GetByID(id string) (domain.Action, error) {
 	}
 	return domain.Action{}, errors.New("target not found")
 }
+
+func(db *MockActionDB) Delete(id string) (domain.Action, error) {
+	for index, data := range db.Data {
+		if data.ID == id {
+			db.Data = append(db.Data[:index], db.Data[index+1:]...)
+
+			return data, nil
+		}
+	}
+
+	return domain.Action{}, errors.New("target not found")
+}

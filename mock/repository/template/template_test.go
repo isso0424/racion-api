@@ -15,6 +15,7 @@ func setup() template.MockTemplateDB {
 			{
 				Name: "test",
 				Color: "#ffffff",
+				ID: "id",
 				Tags: []domain.Tag{
 					{
 						Title: "tags1",
@@ -124,6 +125,21 @@ func TestGetByID(t *testing.T) {
 	assert.Equal(t, "#000000", template.Tags[0].Color)
 }
 
+func TestDelete(t *testing.T) {
+	repo := setup()
+	template, err := repo.Delete("id")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	assert.Equal(t, "test", template.Name)
+	assert.Equal(t, "#ffffff", template.Color)
+	assert.Equal(t, "tags1", template.Tags[0].Title)
+
+	_, err = repo.GetByID("id")
+	assert.NotEqual(t, nil, err)
+}
+
 func TestFail(t *testing.T) {
 	repository := setup()
 	const errorMsg = "error should occur in here"
@@ -144,6 +160,11 @@ func TestFail(t *testing.T) {
 	}
 
 	_, err = repository.GetByID("invalid")
+	if err == nil {
+		t.Fatal(errorMsg)
+	}
+
+	_, err = repository.Delete("invalid")
 	if err == nil {
 		t.Fatal(errorMsg)
 	}

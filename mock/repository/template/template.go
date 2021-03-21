@@ -62,3 +62,15 @@ func(repo *MockTemplateDB) GetByID(id string) (domain.Template, error) {
 
 	return domain.Template{}, errors.New("target not found")
 }
+
+func(db *MockTemplateDB) Delete(id string) (domain.Template, error) {
+	for index, data := range db.Data {
+		if data.ID == id {
+			db.Data = append(db.Data[:index], db.Data[index+1:]...)
+
+			return data, nil
+		}
+	}
+
+	return domain.Template{}, errors.New("target not found")
+}

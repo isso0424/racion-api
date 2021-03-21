@@ -8,4 +8,5 @@ type TemplateRepository interface {
 	GetAll() ([]domain.Template, error)
 	GetByName(name string) ([]domain.Template, error)
 	GetByID(id string) (domain.Template, error)
+	Delete(id string) (domain.Template, error)
 }
