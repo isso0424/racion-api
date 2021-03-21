@@ -164,7 +164,7 @@ func TestFail(t *testing.T) {
 		t.Fatal(errorMsg)
 	}
 
-	_, err = repository.GetByID("invalid")
+	_, err = repository.Delete("invalid")
 	if err == nil {
 		t.Fatal(errorMsg)
 	}
