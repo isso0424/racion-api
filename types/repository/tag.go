@@ -8,4 +8,5 @@ type TagRepository interface {
 	GetAll() ([]domain.Tag, error)
 	GetByTitle(title string) ([]domain.Tag, error)
 	GetByID(id string) (domain.Tag, error)
+	Delete(id string) (domain.Tag, error)
 }

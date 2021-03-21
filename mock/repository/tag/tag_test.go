@@ -16,6 +16,7 @@ func setup() tag.MockTagDB {
 				Title: "hoge",
 				Description: "fuga",
 				Color: "#ffffff",
+				ID: "id",
 			},
 		},
 	}
@@ -102,6 +103,22 @@ func TestGetByID(t *testing.T) {
 	assert.Equal(t, "#ffffff", tag.Color)
 }
 
+func TestDelete(t *testing.T) {
+	repo := setup()
+
+	tag, err := repo.Delete("id")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	assert.Equal(t, "hoge", tag.Title)
+	assert.Equal(t, "fuga", tag.Description)
+	assert.Equal(t, "#ffffff", tag.Color)
+
+	_, err = repo.GetByID("id")
+	assert.NotEqual(t, nil, err)
+}
+
 func TestFail(t *testing.T) {
 	repo := setup()
 
@@ -112,6 +129,9 @@ func TestFail(t *testing.T) {
 	assert.NotEqual(t, nil, err)
 
 	_, err = repo.GetByID("invalid")
+	assert.NotEqual(t, nil, err)
+
+	_, err = repo.Delete("invalid")
 	assert.NotEqual(t, nil, err)
 }
 

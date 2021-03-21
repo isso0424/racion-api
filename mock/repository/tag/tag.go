@@ -60,3 +60,15 @@ func(db MockTagDB) GetByID(id string) (domain.Tag, error) {
 
 	return domain.Tag{}, errors.New("target not found")
 }
+
+func(db *MockTagDB) Delete(id string) (domain.Tag, error) {
+	for index, data := range db.Data {
+		if data.ID == id {
+			db.Data = append(db.Data[:index], db.Data[index+1:]...)
+
+			return data, nil
+		}
+	}
+
+	return domain.Tag{}, errors.New("target not found")
+}
