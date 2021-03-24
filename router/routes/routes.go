@@ -8,4 +8,5 @@ import (
 var Routes = []router.Route{
 	tag.TagCreating{},
 	tag.Get{},
+	tag.Put{},
 }
