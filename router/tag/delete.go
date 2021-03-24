@@ -10,14 +10,11 @@ import (
 	"net/http"
 )
 
-type Put struct {}
+type Delete struct {}
 
-func(route Put) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func(route Delete) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	type Param struct {
 		ID string
-		Title string
-		Color string
-		Description string
 	}
 	params := Param{}
 
@@ -35,13 +32,13 @@ func(route Put) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if params.Title == "" || params.Color == "" || params.Description == "" {
+	if params.ID == "" {
 		handler.HandleError("invalid arguments", "invalid arguments", http.StatusBadRequest, route, w)
 
 		return
 	}
 
-	tag, err := variables.TagController.Edit(params.ID, params.Title, params.Description, params.Color)
+	tag, err := variables.TagController.Delete(params.ID)
 	if err != nil {
 		handler.HandleError(err.Error(), "target not found", http.StatusNotFound, route, w)
 
@@ -62,14 +59,14 @@ func(route Put) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func(route Put) Name() string {
-	return "update tag"
+func(route Delete) Name() string {
+	return "delete tag"
 }
 
-func(route Put) Method() string {
-	return "PUT"
+func(route Delete) Method() string {
+	return "DELETE"
 }
 
-func(route Put) Path() string {
+func(route Delete) Path() string {
 	return "/tag"
 }
