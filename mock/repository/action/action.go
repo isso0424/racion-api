@@ -4,6 +4,8 @@ import (
 	"isso0424/racion-api/types/client_error"
 	"isso0424/racion-api/types/domain"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 type MockActionDB struct {
@@ -17,6 +19,7 @@ func(db *MockActionDB) Create(title, color string, tags []domain.Tag, startAt, e
 		Tags: tags,
 		StartAt: startAt,
 		EndAt: endAt,
+		ID: uuid.NewString(),
 	}
 
 	db.Data = append(db.Data, newData)

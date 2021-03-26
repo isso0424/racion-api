@@ -4,6 +4,8 @@ import (
 	"errors"
 	"isso0424/racion-api/types/client_error"
 	"isso0424/racion-api/types/domain"
+
+	"github.com/google/uuid"
 )
 
 type MockTemplateDB struct {
@@ -16,7 +18,7 @@ func(repo *MockTemplateDB) Create(name, color string, tags []domain.Tag) (domain
 			return domain.Template{}, errors.New("duplicate name")
 		}
 	}
-	newData := domain.Template{ Name: name, Color: color, Tags: tags }
+	newData := domain.Template{ Name: name, Color: color, Tags: tags, ID: uuid.NewString() }
 
 	repo.Data = append(repo.Data, newData)
 
