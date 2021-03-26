@@ -7,6 +7,7 @@ import (
 	"isso0424/racion-api/router/logger"
 	"isso0424/racion-api/router/responser"
 	"isso0424/racion-api/router/variables"
+	"isso0424/racion-api/types/client_error"
 	"net/http"
 )
 
@@ -42,6 +43,11 @@ func(route TagCreating) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	tag, err := variables.TagController.Create(params.Title, params.Description, params.Color)
 	if err != nil {
+		if client_error.IsNotFound(err) {
+			handler.HandleError(err.Error(), err.Error(), http.StatusNotFound, route, w)
+
+			return
+		}
 		handler.HandleError(err.Error(), "internal server error", http.StatusInternalServerError, route, w)
 
 		return
