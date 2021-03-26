@@ -18,16 +18,16 @@ func setup() action.MockActionDB {
 				Title: "title",
 				Tags: []domain.Tag{
 					{
-						Title: "tag",
-						Color: "#ffffff",
+						Title:       "tag",
+						Color:       "#ffffff",
 						Description: "desc",
-						ID: "id",
+						ID:          "id",
 					},
 				},
-				Color: "#123456",
+				Color:   "#123456",
 				StartAt: time.Date(2000, time.January, 1, 0, 0, 0, 0, location),
-				EndAt: time.Date(2000, time.April, 1, 0, 0, 0, 0, location),
-				ID: "id",
+				EndAt:   time.Date(2000, time.April, 1, 0, 0, 0, 0, location),
+				ID:      "id",
 			},
 		},
 	}
@@ -38,12 +38,12 @@ func TestCreate(t *testing.T) {
 	startAt := time.Date(2010, time.April, 1, 0, 0, 0, 0, location)
 	endAt := time.Date(2010, time.August, 1, 0, 0, 0, 0, location)
 	action, err := repo.Create("hoge", "fuga", []domain.Tag{
-			{
-				Title: "tag1",
-				Description: "desc1",
-				Color: "#f0f0f0",
-			},
+		{
+			Title:       "tag1",
+			Description: "desc1",
+			Color:       "#f0f0f0",
 		},
+	},
 		startAt,
 		endAt,
 	)
@@ -70,9 +70,9 @@ func TestEdit(t *testing.T) {
 		"fuga",
 		[]domain.Tag{
 			{
-				Title: "tag1",
+				Title:       "tag1",
 				Description: "desc1",
-				Color: "#f0f0f0",
+				Color:       "#f0f0f0",
 			},
 		},
 		startAt,

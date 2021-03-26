@@ -13,14 +13,14 @@ func setup() template.MockTemplateDB {
 	return template.MockTemplateDB{
 		Data: []domain.Template{
 			{
-				Name: "test",
+				Name:  "test",
 				Color: "#ffffff",
-				ID: "id",
+				ID:    "id",
 				Tags: []domain.Tag{
 					{
-						Title: "tags1",
+						Title:       "tags1",
 						Description: "desc",
-						Color: "#000000",
+						Color:       "#000000",
 					},
 				},
 			},
@@ -33,9 +33,9 @@ func TestCreateTemplate(t *testing.T) {
 
 	template, err := repository.Create("example", "#ff00ff", []domain.Tag{
 		{
-			Title: "example",
+			Title:       "example",
 			Description: "desc",
-			Color: "#012345",
+			Color:       "#012345",
 		},
 	})
 	if err != nil {
@@ -60,9 +60,9 @@ func TestEditTemplate(t *testing.T) {
 	repository := setup()
 	template, err := repository.Edit(repository.Data[0].ID, "test", "#012345", []domain.Tag{
 		{
-			Title: "hoge",
+			Title:       "hoge",
 			Description: "fuga",
-			Color: "#543210",
+			Color:       "#543210",
 		},
 	})
 	if err != nil {

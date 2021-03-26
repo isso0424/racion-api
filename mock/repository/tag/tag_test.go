@@ -13,10 +13,10 @@ func setup() tag.MockTagDB {
 	return tag.MockTagDB{
 		Data: []domain.Tag{
 			{
-				Title: "hoge",
+				Title:       "hoge",
 				Description: "fuga",
-				Color: "#ffffff",
-				ID: "id",
+				Color:       "#ffffff",
+				ID:          "id",
 			},
 		},
 	}
@@ -137,7 +137,7 @@ func TestFail(t *testing.T) {
 
 func TestImplInterface(t *testing.T) {
 	repo := setup()
-	f := func (r repository.TagRepository) {}
+	f := func(r repository.TagRepository) {}
 
 	f(&repo)
 }

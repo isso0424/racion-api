@@ -9,12 +9,12 @@ import (
 	"net/http"
 )
 
-type Get struct {}
+type Get struct{}
 
-func(route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	type Query struct {
 		Title string
-		ID string
+		ID    string
 	}
 	query := Query{}
 
@@ -48,8 +48,8 @@ func(route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		err = responser.Success(
 			responser.DonePayload{
 				Status: http.StatusOK,
-				Data: tag,
-				Route: route,
+				Data:   tag,
+				Route:  route,
 			},
 			w,
 		)
@@ -76,8 +76,8 @@ func(route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		err = responser.Success(
 			responser.DonePayload{
 				Status: http.StatusOK,
-				Data: tags,
-				Route: route,
+				Data:   tags,
+				Route:  route,
 			},
 			w,
 		)
@@ -103,8 +103,8 @@ func(route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	err = responser.Success(
 		responser.DonePayload{
 			Status: http.StatusOK,
-			Data: tags,
-			Route: route,
+			Data:   tags,
+			Route:  route,
 		},
 		w,
 	)
@@ -115,14 +115,14 @@ func(route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func(route Get) Name() string {
+func (route Get) Name() string {
 	return "get tags"
 }
 
-func(route Get) Path() string {
+func (route Get) Path() string {
 	return "/tag"
 }
 
-func(route Get) Method() string {
+func (route Get) Method() string {
 	return "GET"
 }

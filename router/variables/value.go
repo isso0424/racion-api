@@ -9,8 +9,8 @@ import (
 )
 
 var (
-	ActionController action.ActionController
-	TagController tag.TagController
+	ActionController   action.ActionController
+	TagController      tag.TagController
 	TemplateController template.TemplateController
-	Decoder = schema.NewDecoder()
+	Decoder            = schema.NewDecoder()
 )

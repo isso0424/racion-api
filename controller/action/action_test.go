@@ -14,23 +14,23 @@ import (
 
 var (
 	location = time.FixedZone("Asia/Tokyo", 9*60*60)
-	startAt = time.Date(2000, time.April, 1, 1, 0, 0, 0, location)
-	endAt = time.Date(2001, time.April, 1, 1, 0, 0, 0, location)
+	startAt  = time.Date(2000, time.April, 1, 1, 0, 0, 0, location)
+	endAt    = time.Date(2001, time.April, 1, 1, 0, 0, 0, location)
 )
 
 func setup() controller.ActionController {
 	actionRepo := action.MockActionDB{
 		Data: []domain.Action{
 			{
-				ID: "id",
+				ID:    "id",
 				Title: "action1",
 				Color: "#ffffff",
 				Tags: []domain.Tag{
 					{
-						Title: "tag1",
+						Title:       "tag1",
 						Description: "desc",
-						Color: "#123456",
-						ID: "id",
+						Color:       "#123456",
+						ID:          "id",
 					},
 				},
 			},
@@ -40,10 +40,10 @@ func setup() controller.ActionController {
 	tagRepo := tag.MockTagDB{
 		Data: []domain.Tag{
 			{
-				Title: "tag1",
+				Title:       "tag1",
 				Description: "desc",
-				Color: "#123456",
-				ID: "id",
+				Color:       "#123456",
+				ID:          "id",
 			},
 		},
 	}
@@ -51,28 +51,28 @@ func setup() controller.ActionController {
 	templateRepo := template.MockTemplateDB{
 		Data: []domain.Template{
 			{
-				ID: "id",
-				Name: "template1",
+				ID:    "id",
+				Name:  "template1",
 				Color: "#000000",
 				Tags: []domain.Tag{
 					{
-						Title: "tag1",
+						Title:       "tag1",
 						Description: "desc",
-						Color: "#123456",
-						ID: "id",
+						Color:       "#123456",
+						ID:          "id",
 					},
 				},
 			},
 			{
-				ID: "broken",
-				Name: "broken",
+				ID:    "broken",
+				Name:  "broken",
 				Color: "#000000",
 				Tags: []domain.Tag{
 					{
-						Title: "tag1",
+						Title:       "tag1",
 						Description: "desc",
-						Color: "#123456",
-						ID: "broken",
+						Color:       "#123456",
+						ID:          "broken",
 					},
 				},
 			},

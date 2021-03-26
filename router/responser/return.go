@@ -11,7 +11,7 @@ func Success(payload DonePayload, writer http.ResponseWriter) (err error) {
 	if err != nil {
 		Fail(
 			ErrorPayload{
-				Status: http.StatusInternalServerError,
+				Status:  http.StatusInternalServerError,
 				Message: "Value parsing error",
 			},
 			writer,
@@ -23,11 +23,11 @@ func Success(payload DonePayload, writer http.ResponseWriter) (err error) {
 }
 
 func Fail(payload ErrorPayload, writer http.ResponseWriter) (err error) {
-	result, err := json.Marshal(map[string]string{ "message": payload.Message })
+	result, err := json.Marshal(map[string]string{"message": payload.Message})
 	if err != nil {
 		Fail(
 			ErrorPayload{
-				Status: http.StatusInternalServerError,
+				Status:  http.StatusInternalServerError,
 				Message: "Value parsing error",
 			},
 			writer,

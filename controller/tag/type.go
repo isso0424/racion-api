@@ -7,5 +7,5 @@ type TagController struct {
 }
 
 func New(repo repository.TagRepository) TagController {
-	return TagController{ repo }
+	return TagController{repo}
 }

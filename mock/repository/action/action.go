@@ -12,14 +12,14 @@ type MockActionDB struct {
 	Data []domain.Action
 }
 
-func(db *MockActionDB) Create(title, color string, tags []domain.Tag, startAt, endAt time.Time) (domain.Action, error) {
+func (db *MockActionDB) Create(title, color string, tags []domain.Tag, startAt, endAt time.Time) (domain.Action, error) {
 	newData := domain.Action{
-		Title: title,
-		Color: color,
-		Tags: tags,
+		Title:   title,
+		Color:   color,
+		Tags:    tags,
 		StartAt: startAt,
-		EndAt: endAt,
-		ID: uuid.NewString(),
+		EndAt:   endAt,
+		ID:      uuid.NewString(),
 	}
 
 	db.Data = append(db.Data, newData)
@@ -27,7 +27,7 @@ func(db *MockActionDB) Create(title, color string, tags []domain.Tag, startAt, e
 	return newData, nil
 }
 
-func(db *MockActionDB) Edit(id, title, color string, tags []domain.Tag, startAt, endAt time.Time) (domain.Action, error) {
+func (db *MockActionDB) Edit(id, title, color string, tags []domain.Tag, startAt, endAt time.Time) (domain.Action, error) {
 	for index, data := range db.Data {
 		if data.ID == id {
 			db.Data[index].Title = title
@@ -43,11 +43,11 @@ func(db *MockActionDB) Edit(id, title, color string, tags []domain.Tag, startAt,
 	return domain.Action{}, client_error.CreateNotFound("Action", "ID", id)
 }
 
-func(db MockActionDB) GetAll() ([]domain.Action, error) {
+func (db MockActionDB) GetAll() ([]domain.Action, error) {
 	return db.Data, nil
 }
 
-func(db MockActionDB) GetByTitle(title string) ([]domain.Action, error) {
+func (db MockActionDB) GetByTitle(title string) ([]domain.Action, error) {
 	var result []domain.Action
 	for _, data := range db.Data {
 		if data.Title == title {
@@ -61,7 +61,7 @@ func(db MockActionDB) GetByTitle(title string) ([]domain.Action, error) {
 	return []domain.Action{}, client_error.CreateNotFound("Action", "title", title)
 }
 
-func(db MockActionDB) GetByTag(tagID string) ([]domain.Action, error) {
+func (db MockActionDB) GetByTag(tagID string) ([]domain.Action, error) {
 	var results []domain.Action
 	for _, data := range db.Data {
 		for _, tag := range data.Tags {
@@ -78,7 +78,7 @@ func(db MockActionDB) GetByTag(tagID string) ([]domain.Action, error) {
 	return results, nil
 }
 
-func(db MockActionDB) GetByID(id string) (domain.Action, error) {
+func (db MockActionDB) GetByID(id string) (domain.Action, error) {
 	for _, data := range db.Data {
 		if data.ID == id {
 			return data, nil
@@ -87,7 +87,7 @@ func(db MockActionDB) GetByID(id string) (domain.Action, error) {
 	return domain.Action{}, client_error.CreateNotFound("Action", "ID", id)
 }
 
-func(db *MockActionDB) Delete(id string) (domain.Action, error) {
+func (db *MockActionDB) Delete(id string) (domain.Action, error) {
 	for index, data := range db.Data {
 		if data.ID == id {
 			db.Data = append(db.Data[:index], db.Data[index+1:]...)

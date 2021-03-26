@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func(controller ActionController) Edit(id, title, color string, tags []string, startAt, endAt time.Time) (domain.Action, error) {
+func (controller ActionController) Edit(id, title, color string, tags []string, startAt, endAt time.Time) (domain.Action, error) {
 	var tagsArray []domain.Tag
 	for _, tagID := range tags {
 		tag, err := controller.tagRepo.GetByID(tagID)

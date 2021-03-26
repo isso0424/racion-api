@@ -14,15 +14,15 @@ func setup() controller.TemplateController {
 	templateRepo := template.MockTemplateDB{
 		Data: []domain.Template{
 			{
-				Name: "template1",
+				Name:  "template1",
 				Color: "#000000",
-				ID: "id",
+				ID:    "id",
 				Tags: []domain.Tag{
 					{
-						Title: "tag1",
+						Title:       "tag1",
 						Description: "desc",
-						ID: "tag_id",
-						Color: "#ffffff",
+						ID:          "tag_id",
+						Color:       "#ffffff",
 					},
 				},
 			},
@@ -32,10 +32,10 @@ func setup() controller.TemplateController {
 	tagRepo := tag.MockTagDB{
 		Data: []domain.Tag{
 			{
-				Title: "tag1",
+				Title:       "tag1",
 				Description: "desc",
-				ID: "tag_id",
-				Color: "#ffffff",
+				ID:          "tag_id",
+				Color:       "#ffffff",
 			},
 		},
 	}

@@ -9,12 +9,12 @@ import (
 	"net/http"
 )
 
-type Get struct {}
+type Get struct{}
 
-func(route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	type Query struct {
 		Name string
-		ID string
+		ID   string
 	}
 	param := Query{}
 	err := variables.Decoder.Decode(&param, r.URL.Query())
@@ -42,9 +42,9 @@ func(route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 		err = responser.Success(
 			responser.DonePayload{
-				Data: template,
+				Data:   template,
 				Status: http.StatusOK,
-				Route: route,
+				Route:  route,
 			},
 			w,
 		)
@@ -69,9 +69,9 @@ func(route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 		err = responser.Success(
 			responser.DonePayload{
-				Data: templates,
+				Data:   templates,
 				Status: http.StatusOK,
-				Route: route,
+				Route:  route,
 			},
 			w,
 		)
@@ -94,9 +94,9 @@ func(route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	err = responser.Success(
 		responser.DonePayload{
-			Data: templates,
+			Data:   templates,
 			Status: http.StatusOK,
-			Route: route,
+			Route:  route,
 		},
 		w,
 	)
@@ -105,14 +105,14 @@ func(route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func(route Get) Name() string {
+func (route Get) Name() string {
 	return "get template"
 }
 
-func(route Get) Method() string {
+func (route Get) Method() string {
 	return "GET"
 }
 
-func(route Get) Path() string {
+func (route Get) Path() string {
 	return "/template"
 }

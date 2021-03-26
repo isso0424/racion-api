@@ -18,7 +18,7 @@ func HandleError(
 	err := responser.Fail(
 		responser.ErrorPayload{
 			Message: clientMessage,
-			Status: status,
+			Status:  status,
 		},
 		writer,
 	)

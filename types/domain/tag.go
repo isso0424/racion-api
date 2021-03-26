@@ -1,8 +1,8 @@
 package domain
 
 type Tag struct {
-	Title string
+	Title       string
 	Description string
-	Color string
-	ID string
+	Color       string
+	ID          string
 }

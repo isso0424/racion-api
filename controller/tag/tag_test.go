@@ -13,10 +13,10 @@ func setup() controller.TagController {
 	repo := tag.MockTagDB{
 		Data: []domain.Tag{
 			{
-				Title: "tag1",
-				Color: "#000000",
+				Title:       "tag1",
+				Color:       "#000000",
 				Description: "desc",
-				ID: "id",
+				ID:          "id",
 			},
 		},
 	}

@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func(controller ActionController) Create(title, color string, tags []string, startAt, endAt time.Time) (domain.Action, error) {
+func (controller ActionController) Create(title, color string, tags []string, startAt, endAt time.Time) (domain.Action, error) {
 	var tagsArray []domain.Tag
 	for _, tagID := range tags {
 		result, err := controller.tagRepo.GetByID(tagID)
@@ -19,7 +19,7 @@ func(controller ActionController) Create(title, color string, tags []string, sta
 	return controller.actionRepo.Create(title, color, tagsArray, startAt, endAt)
 }
 
-func(controller ActionController) CreateFromTemplate(title string, templateID string, startAt, endAt time.Time) (domain.Action, error) {
+func (controller ActionController) CreateFromTemplate(title string, templateID string, startAt, endAt time.Time) (domain.Action, error) {
 	template, err := controller.templateRepo.GetByID(templateID)
 	if err != nil {
 		return domain.Action{}, err
