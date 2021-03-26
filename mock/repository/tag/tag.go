@@ -11,14 +11,14 @@ type MockTagDB struct {
 	Data []domain.Tag
 }
 
-func(db *MockTagDB) Create(title, description, color string) (domain.Tag, error) {
-	tag := domain.Tag{ Title: title, Description: description, Color: color, ID: uuid.NewString() }
+func (db *MockTagDB) Create(title, description, color string) (domain.Tag, error) {
+	tag := domain.Tag{Title: title, Description: description, Color: color, ID: uuid.NewString()}
 	db.Data = append(db.Data, tag)
 
 	return tag, nil
 }
 
-func(db *MockTagDB) Edit(id, title, description, color string) (domain.Tag, error) {
+func (db *MockTagDB) Edit(id, title, description, color string) (domain.Tag, error) {
 	for index, data := range db.Data {
 		if data.ID == id {
 			db.Data[index].Title = title
@@ -32,11 +32,11 @@ func(db *MockTagDB) Edit(id, title, description, color string) (domain.Tag, erro
 	return domain.Tag{}, client_error.CreateNotFound("Tag", "ID", id)
 }
 
-func(db MockTagDB) GetAll() ([]domain.Tag, error) {
+func (db MockTagDB) GetAll() ([]domain.Tag, error) {
 	return db.Data, nil
 }
 
-func(db MockTagDB) GetByTitle(title string) (tags []domain.Tag, err error) {
+func (db MockTagDB) GetByTitle(title string) (tags []domain.Tag, err error) {
 	for _, data := range db.Data {
 		if data.Title == title {
 			tags = append(tags, data)
@@ -51,7 +51,7 @@ func(db MockTagDB) GetByTitle(title string) (tags []domain.Tag, err error) {
 	return
 }
 
-func(db MockTagDB) GetByID(id string) (domain.Tag, error) {
+func (db MockTagDB) GetByID(id string) (domain.Tag, error) {
 	for _, data := range db.Data {
 		if data.ID == id {
 			return data, nil
@@ -61,7 +61,7 @@ func(db MockTagDB) GetByID(id string) (domain.Tag, error) {
 	return domain.Tag{}, client_error.CreateNotFound("Tag", "ID", id)
 }
 
-func(db *MockTagDB) Delete(id string) (domain.Tag, error) {
+func (db *MockTagDB) Delete(id string) (domain.Tag, error) {
 	for index, data := range db.Data {
 		if data.ID == id {
 			db.Data = append(db.Data[:index], db.Data[index+1:]...)

@@ -1,4 +1,4 @@
-package tag
+package template
 
 import (
 	"isso0424/racion-api/router/handler"
@@ -13,42 +13,37 @@ type Get struct{}
 
 func (route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	type Query struct {
-		Title string
-		ID    string
+		Name string
+		ID   string
 	}
-	query := Query{}
-
-	err := variables.Decoder.Decode(&query, r.URL.Query())
+	param := Query{}
+	err := variables.Decoder.Decode(&param, r.URL.Query())
 	if err != nil {
 		handler.HandleError(err.Error(), "internal server error", http.StatusInternalServerError, route, w)
-
 		return
 	}
 
-	if query.ID != "" && query.Title != "" {
+	if param.ID != "" && param.Name != "" {
 		errMessage := "Cannot use more than one args"
 		handler.HandleError(errMessage, errMessage, http.StatusBadRequest, route, w)
-
-		return
 	}
 
-	if query.ID != "" {
-		tag, err := variables.TagController.GetByID(query.ID)
+	if param.ID != "" {
+		template, err := variables.TemplateController.GetByID(param.ID)
 		if err != nil {
 			if client_error.IsNotFound(err) {
 				handler.HandleError(err.Error(), err.Error(), http.StatusNotFound, route, w)
 
 				return
 			}
-			handler.HandleError(err.Error(), "not found", http.StatusNotFound, route, w)
+			handler.HandleError(err.Error(), "internal server error", http.StatusInternalServerError, route, w)
 
 			return
 		}
-
 		err = responser.Success(
 			responser.DonePayload{
+				Data:   template,
 				Status: http.StatusOK,
-				Data:   tag,
 				Route:  route,
 			},
 			w,
@@ -60,23 +55,22 @@ func (route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if query.Title != "" {
-		tags, err := variables.TagController.GetByTitle(query.Title)
+	if param.Name != "" {
+		templates, err := variables.TemplateController.GetByName(param.Name)
 		if err != nil {
 			if client_error.IsNotFound(err) {
 				handler.HandleError(err.Error(), err.Error(), http.StatusNotFound, route, w)
 
 				return
 			}
-			handler.HandleError(err.Error(), "not found", http.StatusNotFound, route, w)
+			handler.HandleError(err.Error(), "internal server error", http.StatusInternalServerError, route, w)
 
 			return
 		}
-
 		err = responser.Success(
 			responser.DonePayload{
+				Data:   templates,
 				Status: http.StatusOK,
-				Data:   tags,
 				Route:  route,
 			},
 			w,
@@ -87,8 +81,7 @@ func (route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 		return
 	}
-
-	tags, err := variables.TagController.GetAll()
+	templates, err := variables.TemplateController.GetAll()
 	if err != nil {
 		if client_error.IsNotFound(err) {
 			handler.HandleError(err.Error(), err.Error(), http.StatusNotFound, route, w)
@@ -99,30 +92,27 @@ func (route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 		return
 	}
-
 	err = responser.Success(
 		responser.DonePayload{
+			Data:   templates,
 			Status: http.StatusOK,
-			Data:   tags,
 			Route:  route,
 		},
 		w,
 	)
 	if err != nil {
 		logger.LoggingError(route, err.Error())
-
-		return
 	}
 }
 
 func (route Get) Name() string {
-	return "get tags"
-}
-
-func (route Get) Path() string {
-	return "/tag"
+	return "get template"
 }
 
 func (route Get) Method() string {
 	return "GET"
+}
+
+func (route Get) Path() string {
+	return "/template"
 }

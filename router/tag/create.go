@@ -11,12 +11,12 @@ import (
 	"net/http"
 )
 
-type TagCreating struct {}
+type TagCreating struct{}
 
-func(route TagCreating) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (route TagCreating) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	type Param struct {
-		Title string
-		Color string
+		Title       string
+		Color       string
 		Description string
 	}
 	params := Param{}
@@ -55,8 +55,8 @@ func(route TagCreating) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	err = responser.Success(
 		responser.DonePayload{
-			Data: tag,
-			Route: route,
+			Data:   tag,
+			Route:  route,
 			Status: http.StatusCreated,
 		},
 		w,
@@ -67,14 +67,14 @@ func(route TagCreating) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func(route TagCreating) Name() string {
+func (route TagCreating) Name() string {
 	return "create tag"
 }
 
-func(route TagCreating) Method() string {
+func (route TagCreating) Method() string {
 	return "POST"
 }
 
-func(route TagCreating) Path() string {
+func (route TagCreating) Path() string {
 	return "/tag"
 }

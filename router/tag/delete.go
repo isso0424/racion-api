@@ -11,9 +11,9 @@ import (
 	"net/http"
 )
 
-type Delete struct {}
+type Delete struct{}
 
-func(route Delete) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (route Delete) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	type Param struct {
 		ID string
 	}
@@ -53,8 +53,8 @@ func(route Delete) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	err = responser.Success(
 		responser.DonePayload{
-			Data: tag,
-			Route: route,
+			Data:   tag,
+			Route:  route,
 			Status: http.StatusOK,
 		},
 		w,
@@ -65,14 +65,14 @@ func(route Delete) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func(route Delete) Name() string {
+func (route Delete) Name() string {
 	return "delete tag"
 }
 
-func(route Delete) Method() string {
+func (route Delete) Method() string {
 	return "DELETE"
 }
 
-func(route Delete) Path() string {
+func (route Delete) Path() string {
 	return "/tag"
 }
