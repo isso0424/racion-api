@@ -1,7 +1,7 @@
 package action
 
 import (
-	"errors"
+	"isso0424/racion-api/types/client_error"
 	"isso0424/racion-api/types/domain"
 	"time"
 )
@@ -37,7 +37,7 @@ func(db *MockActionDB) Edit(id, title, color string, tags []domain.Tag, startAt,
 		}
 	}
 
-	return domain.Action{}, errors.New("target not found")
+	return domain.Action{}, client_error.CreateNotFound("Action", "ID", id)
 }
 
 func(db MockActionDB) GetAll() ([]domain.Action, error) {
@@ -55,7 +55,7 @@ func(db MockActionDB) GetByTitle(title string) ([]domain.Action, error) {
 	if len(result) != 0 {
 		return result, nil
 	}
-	return []domain.Action{}, errors.New("target not found")
+	return []domain.Action{}, client_error.CreateNotFound("Action", "title", title)
 }
 
 func(db MockActionDB) GetByTag(tagID string) ([]domain.Action, error) {
@@ -69,7 +69,7 @@ func(db MockActionDB) GetByTag(tagID string) ([]domain.Action, error) {
 	}
 
 	if len(results) == 0 {
-		return results, errors.New("target not found")
+		return results, client_error.CreateNotFound("Action", "Tag ID", tagID)
 	}
 
 	return results, nil
@@ -81,7 +81,7 @@ func(db MockActionDB) GetByID(id string) (domain.Action, error) {
 			return data, nil
 		}
 	}
-	return domain.Action{}, errors.New("target not found")
+	return domain.Action{}, client_error.CreateNotFound("Action", "ID", id)
 }
 
 func(db *MockActionDB) Delete(id string) (domain.Action, error) {
@@ -93,5 +93,5 @@ func(db *MockActionDB) Delete(id string) (domain.Action, error) {
 		}
 	}
 
-	return domain.Action{}, errors.New("target not found")
+	return domain.Action{}, client_error.CreateNotFound("Action", "ID", id)
 }

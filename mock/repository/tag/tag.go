@@ -1,7 +1,7 @@
 package tag
 
 import (
-	"errors"
+	"isso0424/racion-api/types/client_error"
 	"isso0424/racion-api/types/domain"
 
 	"github.com/google/uuid"
@@ -29,7 +29,7 @@ func(db *MockTagDB) Edit(id, title, description, color string) (domain.Tag, erro
 		}
 	}
 
-	return domain.Tag{}, errors.New("target not found")
+	return domain.Tag{}, client_error.CreateNotFound("Tag", "ID", id)
 }
 
 func(db MockTagDB) GetAll() ([]domain.Tag, error) {
@@ -43,7 +43,7 @@ func(db MockTagDB) GetByTitle(title string) (tags []domain.Tag, err error) {
 		}
 	}
 	if len(tags) == 0 {
-		err = errors.New("target not found")
+		err = client_error.CreateNotFound("Tag", "Title", title)
 
 		return
 	}
@@ -58,7 +58,7 @@ func(db MockTagDB) GetByID(id string) (domain.Tag, error) {
 		}
 	}
 
-	return domain.Tag{}, errors.New("target not found")
+	return domain.Tag{}, client_error.CreateNotFound("Tag", "ID", id)
 }
 
 func(db *MockTagDB) Delete(id string) (domain.Tag, error) {
@@ -70,5 +70,5 @@ func(db *MockTagDB) Delete(id string) (domain.Tag, error) {
 		}
 	}
 
-	return domain.Tag{}, errors.New("target not found")
+	return domain.Tag{}, client_error.CreateNotFound("Tag", "ID", id)
 }
