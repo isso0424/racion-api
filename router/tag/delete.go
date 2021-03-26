@@ -7,6 +7,7 @@ import (
 	"isso0424/racion-api/router/logger"
 	"isso0424/racion-api/router/responser"
 	"isso0424/racion-api/router/variables"
+	"isso0424/racion-api/types/client_error"
 	"net/http"
 )
 
@@ -40,6 +41,11 @@ func(route Delete) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	tag, err := variables.TagController.Delete(params.ID)
 	if err != nil {
+		if client_error.IsNotFound(err) {
+			handler.HandleError(err.Error(), err.Error(), http.StatusNotFound, route, w)
+
+			return
+		}
 		handler.HandleError(err.Error(), "target not found", http.StatusNotFound, route, w)
 
 		return

@@ -2,7 +2,10 @@ package template
 
 import (
 	"errors"
+	"isso0424/racion-api/types/client_error"
 	"isso0424/racion-api/types/domain"
+
+	"github.com/google/uuid"
 )
 
 type MockTemplateDB struct {
@@ -15,7 +18,7 @@ func(repo *MockTemplateDB) Create(name, color string, tags []domain.Tag) (domain
 			return domain.Template{}, errors.New("duplicate name")
 		}
 	}
-	newData := domain.Template{ Name: name, Color: color, Tags: tags }
+	newData := domain.Template{ Name: name, Color: color, Tags: tags, ID: uuid.NewString() }
 
 	repo.Data = append(repo.Data, newData)
 
@@ -33,7 +36,7 @@ func(repo *MockTemplateDB) Edit(id, name, color string, tags []domain.Tag) (doma
 		}
 	}
 
-	return domain.Template{}, errors.New("target not found")
+	return domain.Template{}, client_error.CreateNotFound("Template", "ID", id)
 }
 
 func(repo *MockTemplateDB) GetAll() ([]domain.Template, error) {
@@ -48,7 +51,7 @@ func(repo *MockTemplateDB) GetByName(name string) (templates []domain.Template, 
 	}
 
 	if len(templates) == 0 {
-		return []domain.Template{}, errors.New("target not found")
+		return []domain.Template{}, client_error.CreateNotFound("Template", "Name", name)
 	}
 	return
 }
@@ -60,7 +63,7 @@ func(repo *MockTemplateDB) GetByID(id string) (domain.Template, error) {
 		}
 	}
 
-	return domain.Template{}, errors.New("target not found")
+	return domain.Template{}, client_error.CreateNotFound("Template", "ID", id)
 }
 
 func(db *MockTemplateDB) Delete(id string) (domain.Template, error) {
@@ -72,5 +75,5 @@ func(db *MockTemplateDB) Delete(id string) (domain.Template, error) {
 		}
 	}
 
-	return domain.Template{}, errors.New("target not found")
+	return domain.Template{}, client_error.CreateNotFound("Template", "ID", id)
 }
