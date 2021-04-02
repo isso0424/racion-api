@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"isso0424/racion-api/mock/repository/action"
 	"isso0424/racion-api/mock/repository/tag"
 	"isso0424/racion-api/mock/repository/template"
@@ -16,5 +17,11 @@ func main() {
 		&tag.MockTagDB{Data: make([]domain.Tag, 0)},
 		&template.MockTemplateDB{Data: make([]domain.Template, 0)},
 	)
-	log.Println(server.Serve(&server.Config{ListenIP: "localhost", ListenPort: 8000}))
+
+	port := flag.Int("port", 8000, "server listen port")
+	host := flag.String("host", "localhost", "server listen host")
+	flag.Parse()
+
+	log.Printf("Server running on http://%s:%d", *host, *port)
+	log.Println(server.Serve(&server.Config{ListenIP: *host, ListenPort: *port}))
 }
