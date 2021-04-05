@@ -11,16 +11,16 @@ import (
 	"time"
 )
 
-type Update struct {}
+type Update struct{}
 
-func(route Update) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (route Update) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	type Param struct {
-		Title string
-		Tags []string
-		Color string
-		ID string
+		Title   string
+		Tags    []string
+		Color   string
+		ID      string
 		StartAt int64
-		EndAt int64
+		EndAt   int64
 	}
 	param := Param{}
 
@@ -58,8 +58,8 @@ func(route Update) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	err = responser.Success(
 		responser.DonePayload{
-			Data: action,
-			Route: route,
+			Data:   action,
+			Route:  route,
 			Status: http.StatusCreated,
 		},
 		w,
@@ -69,14 +69,14 @@ func(route Update) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func(route Update) Method() string {
+func (route Update) Method() string {
 	return "PUT"
 }
 
-func(route Update) Path() string {
+func (route Update) Path() string {
 	return "/action"
 }
 
-func(route Update) Name() string {
+func (route Update) Name() string {
 	return "Update action"
 }

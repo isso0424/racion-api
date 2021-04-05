@@ -11,14 +11,14 @@ import (
 	"net/http"
 )
 
-type Put struct {}
+type Put struct{}
 
-func(route Put) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (route Put) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	type Param struct {
-		ID string
-		Name string
+		ID    string
+		Name  string
 		Color string
-		Tags []string
+		Tags  []string
 	}
 	param := Param{}
 
@@ -57,8 +57,8 @@ func(route Put) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	err = responser.Success(
 		responser.DonePayload{
-			Data: template,
-			Route: route,
+			Data:   template,
+			Route:  route,
 			Status: http.StatusOK,
 		},
 		w,
@@ -68,14 +68,14 @@ func(route Put) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func(route Put) Name() string {
+func (route Put) Name() string {
 	return "update template"
 }
 
-func(route Put) Method() string {
+func (route Put) Method() string {
 	return "PUT"
 }
 
-func(route Put) Path() string {
+func (route Put) Path() string {
 	return "/template"
 }
