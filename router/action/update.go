@@ -1,4 +1,4 @@
-package template
+package action
 
 import (
 	"encoding/json"
@@ -9,16 +9,19 @@ import (
 	"isso0424/racion-api/router/variables"
 	"isso0424/racion-api/types/client_error"
 	"net/http"
+	"time"
 )
 
-type Put struct{}
+type Update struct{}
 
-func (route Put) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (route Update) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	type Param struct {
-		ID    string
-		Name  string
-		Color string
-		Tags  []string
+		Title   string
+		Tags    []string
+		Color   string
+		ID      string
+		StartAt int64
+		EndAt   int64
 	}
 	param := Param{}
 
@@ -36,30 +39,29 @@ func (route Put) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if param.ID == "" || param.Name == "" || param.Color == "" {
+	if param.ID == "" || param.Title == "" || param.Color == "" || param.StartAt == 0 || param.EndAt == 0 {
 		handler.HandleError("invalid arguments", "invalid arguments", http.StatusBadRequest, route, w)
 
 		return
 	}
 
-	template, err := variables.TemplateController.Edit(param.ID, param.Name, param.Color, param.Tags)
+	action, err := variables.ActionController.Edit(param.ID, param.Title, param.Color, param.Tags, time.Unix(param.StartAt, 0), time.Unix(param.EndAt, 0))
 	if err != nil {
 		if client_error.IsNotFound(err) {
-			handler.HandleError(err.Error(), err.Error(), http.StatusNotFound, route, w)
+			handler.HandleError(err.Error(), err.Error(), http.StatusBadRequest, route, w)
 
 			return
 		}
-
-		handler.HandleError("internal server error", "internal server error", http.StatusInternalServerError, route, w)
+		handler.HandleError(err.Error(), "internal server error", http.StatusInternalServerError, route, w)
 
 		return
 	}
 
 	err = responser.Success(
 		responser.DonePayload{
-			Data:   template,
+			Data:   action,
 			Route:  route,
-			Status: http.StatusOK,
+			Status: http.StatusCreated,
 		},
 		w,
 	)
@@ -68,14 +70,14 @@ func (route Put) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (route Put) Name() string {
-	return "update template"
-}
-
-func (route Put) Method() string {
+func (route Update) Method() string {
 	return "PUT"
 }
 
-func (route Put) Path() string {
-	return "/template"
+func (route Update) Path() string {
+	return "/action"
+}
+
+func (route Update) Name() string {
+	return "Update action"
 }

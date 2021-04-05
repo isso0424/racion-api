@@ -12,9 +12,9 @@ import (
 	"time"
 )
 
-type Create struct {}
+type Create struct{}
 
-func(route Create) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (route Create) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	type Param struct {
 		Title   string
 		Tags    []string
@@ -58,8 +58,8 @@ func(route Create) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	err = responser.Success(
 		responser.DonePayload{
-			Data: action,
-			Route: route,
+			Data:   action,
+			Route:  route,
 			Status: http.StatusCreated,
 		},
 		w,
@@ -69,14 +69,14 @@ func(route Create) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func(route Create) Name() string {
+func (route Create) Name() string {
 	return "create action"
 }
 
-func(route Create) Method() string {
+func (route Create) Method() string {
 	return "POST"
 }
 
-func(route Create) Path() string {
+func (route Create) Path() string {
 	return "/action"
 }
