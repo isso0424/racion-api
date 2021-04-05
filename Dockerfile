@@ -1,23 +1,16 @@
-FROM golang:1.16.2-alpine3.13
+FROM golang:1.16.2-alpine3.13 as build
 
 WORKDIR /usr/src/
 
-ARG PORT=8000
-
-ARG HOST=localhost
-
 COPY ./ /usr/src/
 
-RUN echo "fetching packages..."
+RUN go build -tags netgo -o racion-api .
 
-CMD go mod download
+FROM alpine:3.13
 
-RUN echo "running linter..."
+ENV PORT=8000 \
+    HOST=localhost
 
-CMD go vet ./...
+COPY --from=build /usr/src/racion-api /usr/local/bin
 
-RUN echo "server starting..."
-
-CMD go run main.go --port $PORT --host $HOST
-
-EXPOSE $PORT
+CMD /usr/local/bin/racion-api --port $PORT --host $HOST
