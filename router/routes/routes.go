@@ -18,4 +18,5 @@ var Routes = []router.Route{
 	template.Delete{},
 	action.Create{},
 	action.Update{},
+	action.Get{},
 }
