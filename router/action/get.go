@@ -9,9 +9,9 @@ import (
 	"net/http"
 )
 
-type Get struct {}
+type Get struct{}
 
-func(route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	type Query struct {
 		Title string
 		ID    string
@@ -45,8 +45,8 @@ func(route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		err = responser.Success(
 			responser.DonePayload{
 				Status: http.StatusOK,
-				Route: route,
-				Data: action,
+				Route:  route,
+				Data:   action,
 			},
 			w,
 		)
@@ -73,8 +73,8 @@ func(route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		err = responser.Success(
 			responser.DonePayload{
 				Status: http.StatusOK,
-				Route: route,
-				Data: action,
+				Route:  route,
+				Data:   action,
 			},
 			w,
 		)
@@ -100,8 +100,8 @@ func(route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	err = responser.Success(
 		responser.DonePayload{
 			Status: http.StatusOK,
-			Route: route,
-			Data: action,
+			Route:  route,
+			Data:   action,
 		},
 		w,
 	)
@@ -111,14 +111,14 @@ func(route Get) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func(route Get) Method() string {
+func (route Get) Method() string {
 	return "GET"
 }
 
-func(route Get) Name() string {
+func (route Get) Name() string {
 	return "Get actions"
 }
 
-func(route Get) Path() string {
+func (route Get) Path() string {
 	return "/action"
 }
